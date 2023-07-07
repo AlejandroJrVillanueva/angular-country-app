@@ -1,5 +1,10 @@
 <input type="text" [placeholder]="placeholder"
+class="form-control"
+(keyup.enter)="emitSearchbox()" #txtSearchInput>
+
+
+<!-- <input type="text" [placeholder]="placeholder"
   class="form-control"
   (keyup.enter)="emitSearchbox(txtSearchInput.value)"
   #txtSearchInput
-/>
+/> -->
