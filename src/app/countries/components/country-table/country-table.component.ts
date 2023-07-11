@@ -5,6 +5,9 @@ import { Country } from '../../interfaces/country';
   selector: 'countries-country-table',
   templateUrl: './country-table.component.html',
   styles: [
+    `img {
+      width: 40px;
+    }`
   ]
 })
 export class CountryTableComponent {

@@ -1,1 +1,31 @@
-<p>country-table works!</p>
+<div *ngIf="country.length === 0; else tables" class="alert alert-warning text center">
+  <h2> No hay Paises para mostrar</h2>
+</div>
+
+<ng-template #tables>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Icon</th>
+        <th scope="col">Bandera</th>
+        <th scope="col">Capital</th>
+        <th scope="col">Población</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let c of country; let i = index">
+        <td>{{ i + 1 }} </td>
+        <td>{{ c.flag }}</td>
+        <td> <img [src]="c.flags.svg" [alt]="c.name.common"/> </td>
+        <td>{{ c.name.common }}</td>
+        <td>{{ c.capital }}</td>
+        <td>{{ c.population | number }}</td>
+        <td><a href="#"> Ver mas</a></td>
+      </tr>
+    </tbody>
+  </table>
+
+
+</ng-template>
