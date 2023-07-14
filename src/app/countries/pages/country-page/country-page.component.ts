@@ -1,6 +1,7 @@
-import { CountriesService } from './../../services/countries.service';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { switchMap } from 'rxjs';
+import { CountriesService } from './../../services/countries.service';
 
 @Component({
   selector: 'countries-country-page',
@@ -12,10 +13,31 @@ export class CountryPageComponent implements OnInit {
 
   constructor(
     private activatedRoute: ActivatedRoute,
+    private router: Router,
     private countriesService: CountriesService
     ) {}
 
   ngOnInit(): void {
+
+    this.activatedRoute.params
+      .pipe(
+        switchMap( ({id}) => this.countriesService.searchCountryByAlphaCode( id ) ),
+      )
+      .subscribe( country => {
+
+        if(!country){
+          return this.router.navigateByUrl('');
+        }
+
+        console.log('Tenemos un pais');
+        return;
+      });
+
+  }
+
+
+    //#region Sin Factorizar ngOnInit
+  // ngOnInit(): void {
     // SIN destructuracion
     // this.activatedRoute.params
       // .subscribe((params) => {
@@ -30,14 +52,17 @@ export class CountryPageComponent implements OnInit {
 
     // });
 
-    this.activatedRoute.params
-      .subscribe( ({id}) => {
+    // RESOLUCION FINAL
+  //   this.activatedRoute.params
+  //     .subscribe( ({id}) => {
 
-        this.countriesService.searchCountryByAlphaCode(id)
-          .subscribe( country => {
-            console.log({country})
-          });
+  //       this.countriesService.searchCountryByAlphaCode(id)
+  //         .subscribe( country => {
+  //           console.log({country})
+  //         });
 
-      });
-  }
+  //     });
+  // }
+  //#endregion
+
 }
