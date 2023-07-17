@@ -1,1 +1,13 @@
-<p>country-page works!</p>
+<ng-template #loading>
+  <div class="alert alert-info text-center">
+    Espere por favor
+  </div>
+</ng-template>
+
+<div *ngIf="country; else loading">
+  <div class="row">
+    <div class="col-12">
+      <h2> País: <strong>{{country.name.common}}</strong></h2>
+    </div>
+  </div>
+</div>
