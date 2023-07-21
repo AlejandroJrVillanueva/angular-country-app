@@ -26,6 +26,7 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
     AboutPageComponent,
     ContactPageComponent,
     HomePageComponent,
+    LoadingSpinnerComponent,
     SearchboxComponent,
     SidebarComponent,
   ]
