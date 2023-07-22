@@ -28,7 +28,7 @@ export class CountriesService {
     return this.http.get<Country[]>(url)
       .pipe(
         catchError( () =>  of( [] )),//of : devuelve un Observable del tipo que se pone en los parentesis
-        delay(1500) //expresado en segundos
+        delay(500) //1000 = 1 SEG //expresado en segundos
       );
   }
   searchCapital(term: string) : Observable<Country[]>{
