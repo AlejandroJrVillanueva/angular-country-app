@@ -1,5 +1,5 @@
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { Subject, debounceTime } from 'rxjs';
+import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { Subject, Subscription, debounceTime } from 'rxjs';
 
 @Component({
   selector: 'shared-searchbox',
@@ -7,10 +7,15 @@ import { Subject, debounceTime } from 'rxjs';
   styles: [
   ]
 })
-export class SearchboxComponent implements OnInit {
+export class SearchboxComponent implements OnInit, OnDestroy {
 
   //es un tipo especial de Observable
   private debouncer: Subject<string> = new Subject<string>();
+  //Las subscripciones se manejan de forma independiente.
+  private debouncerSubscription?: Subscription;
+
+  @Input()
+  public placeholder : string = '';
 
   @Output()
   public onValue = new EventEmitter<string>();
@@ -18,21 +23,22 @@ export class SearchboxComponent implements OnInit {
   @Output()
   public onDebounce = new EventEmitter<string>();
 
-  @Input()
-  public placeholder : string = '';
-
   //Se inicializa justo despues del constructor
   ngOnInit(): void {
-    this.debouncer
+    this.debouncerSubscription = this.debouncer
     .pipe(
-    //cuanto tiempo quiero esperar para hacer la siguiente emicion
-    //osea espero medio segundo para ver si recibo mas valores, si vuelve a escribir no lo dejo pasar
-    // es como una barrera
+      //cuanto tiempo quiero esperar para hacer la siguiente emicion
+      //osea espero medio segundo para ver si recibo mas valores, si vuelve a escribir no lo dejo pasar
+      // es como una barrera
       debounceTime(500)
-    )
-    .subscribe(value => {
-      this.onDebounce.emit(value);
-    })
+      )
+      .subscribe(value => {
+        this.onDebounce.emit(value);
+      })
+    }
+
+  ngOnDestroy(): void {
+    this.debouncerSubscription?.unsubscribe();
   }
 
   emitSearchbox(value : string):void{
@@ -40,7 +46,7 @@ export class SearchboxComponent implements OnInit {
   }
 
   onKeyPress(searchTerm: string){
-    this.debouncer.next(searchTerm);
+      this.debouncer.next(searchTerm);
   }
 
 }
