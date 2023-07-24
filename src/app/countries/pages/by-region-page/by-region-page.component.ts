@@ -10,13 +10,16 @@ type Region = 'Africa'|'Americas'|'Asia'|'Europe' |'Oceania'
 })
 export class ByRegionPageComponent {
 
-  countriesByRegion : Country[] = [];
-  public regions : Region[] = ['Africa','Americas','Asia','Europe','Oceania']
+  public countriesByRegion: Country[] = [];
+  public regions: Region[] = ['Africa','Americas','Asia','Europe','Oceania']
+  public selectedRegion?: Region;
 
   constructor(private countriesService: CountriesService) {}
 
-  searchByRegion(term: string):void{
-    this.countriesService.searchRegion(term)
+  searchByRegion(region: Region):void{
+    this.selectedRegion = region;
+
+    this.countriesService.searchRegion(region)
       .subscribe(c => this.countriesByRegion = c );
     }
 }
