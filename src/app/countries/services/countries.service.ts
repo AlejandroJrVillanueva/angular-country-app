@@ -11,9 +11,9 @@ export class CountriesService {
   private apiUrl: string = 'https://restcountries.com/v3.1';
 
   public cacheStore: CacheStore = {
-    byCapital: { term: '', countries: [] },
+    byCapitals: { term: '', countries: [] },
     byCountries: { term: '', countries: [] },
-    byRegion: { region: '', countries: [] },
+    byRegions: { region: '', countries: [] },
   }
 
   constructor(private http: HttpClient) {
@@ -47,7 +47,7 @@ export class CountriesService {
         // en EcmaScript v6 o superior cuando tiene el mismo nombre no hace falta agregar variable.
         // Lo considera redundante
         // tap( countries => this.cacheStore.byCapital = { term: term, countries: countries })
-        tap( countries => this.cacheStore.byCapital = { term, countries })
+        tap( countries => this.cacheStore.byCapitals = { term, countries })
       );
   }
 
@@ -65,7 +65,7 @@ export class CountriesService {
 
     return this.getCountryRequest(url)
       .pipe(
-        tap(countries => this.cacheStore.byRegion = { region, countries})
+        tap(countries => this.cacheStore.byRegions = { region, countries})
       );
   }
 
