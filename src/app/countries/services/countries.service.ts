@@ -43,6 +43,9 @@ export class CountriesService {
     const url = `${this.apiUrl}/capital/${term}`;
     return this.getCountryRequest(url)
       .pipe(
+        // en EcmaScript v6 o superior cuando tiene el mismo nombre no hace falta agregar variable.
+        // Lo considera redundante
+        // tap( countries => this.cacheStore.byCapital = { term: term, countries: countries })
         tap( countries => this.cacheStore.byCapital = { term, countries })
       );
   }
