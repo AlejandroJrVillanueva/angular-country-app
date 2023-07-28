@@ -4,7 +4,6 @@ import { Observable, catchError, delay, map, of, tap } from 'rxjs';
 import { CacheStore } from '../interfaces/cache-store.interface';
 import { Country } from '../interfaces/country.interface';
 
-
 @Injectable({providedIn: 'root'})
 export class CountriesService {
 
@@ -41,6 +40,7 @@ export class CountriesService {
 
   searchCapital(term: string) : Observable<Country[]>{
     const url = `${this.apiUrl}/capital/${term}`;
+
     return this.getCountryRequest(url)
       .pipe(
         // en EcmaScript v6 o superior cuando tiene el mismo nombre no hace falta agregar variable.
@@ -52,11 +52,16 @@ export class CountriesService {
 
   searchCountry(term: string) : Observable<Country[]>{
     const url = `${this.apiUrl}/name/${term}`;
-    return this.getCountryRequest(url);
+
+    return this.getCountryRequest(url)
+    .pipe(
+      tap( countries => this.cacheStore.byCountries = { term, countries })
+    );
   }
 
   searchRegion(region: string) : Observable<Country[]>{
     const url = `${this.apiUrl}/region/${region}`;
+
     return this.getCountryRequest(url);
   }
 
