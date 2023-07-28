@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, delay, map, of } from 'rxjs';
 import { CacheStore } from '../interfaces/cache-store.interface';
-import { Country } from '../interfaces/country';
+import { Country } from '../interfaces/country.interface';
 
 
 @Injectable({providedIn: 'root'})

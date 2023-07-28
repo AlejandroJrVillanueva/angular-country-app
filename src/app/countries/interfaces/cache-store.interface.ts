@@ -1,4 +1,4 @@
-import { Country } from './country';
+import { Country } from './country.interface';
 import { Region } from './region.type';
 
 export interface CacheStore{
