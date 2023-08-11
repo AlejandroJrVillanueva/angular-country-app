@@ -17,8 +17,18 @@ export class CountriesService {
   }
 
   constructor(private http: HttpClient) {
+    this.loadFromLocalStorage();
   }
 
+  private saveToLocalStorage() : void{
+    localStorage.setItem('cacheStorage', JSON.stringify(this.cacheStore));
+  }
+
+  private loadFromLocalStorage(){
+    if(!localStorage.getItem('cacheStorage')) return;
+
+    this.cacheStore = JSON.parse( localStorage.getItem('cacheStorage')! );
+  }
   searchCountryByAlphaCode(code: string) : Observable<Country | null>{
 
     const url = `${this.apiUrl}/alpha/${code}`;
@@ -47,7 +57,8 @@ export class CountriesService {
         // en EcmaScript v6 o superior cuando tiene el mismo nombre no hace falta agregar variable.
         // Lo considera redundante
         // tap( countries => this.cacheStore.byCapital = { term: term, countries: countries })
-        tap( countries => this.cacheStore.byCapitals = { term, countries })
+        tap( countries => this.cacheStore.byCapitals = { term, countries }),
+        tap( () => this.saveToLocalStorage())
       );
   }
 
@@ -56,7 +67,8 @@ export class CountriesService {
 
     return this.getCountryRequest(url)
     .pipe(
-      tap( countries => this.cacheStore.byCountries = { term, countries })
+      tap( countries => this.cacheStore.byCountries = { term, countries }),
+      tap( () => this.saveToLocalStorage())
     );
   }
 
@@ -65,7 +77,8 @@ export class CountriesService {
 
     return this.getCountryRequest(url)
       .pipe(
-        tap(countries => this.cacheStore.byRegions = { region, countries})
+        tap(countries => this.cacheStore.byRegions = { region, countries}),
+        tap( () => this.saveToLocalStorage())
       );
   }
 
