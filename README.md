@@ -1,4 +1,27 @@
-# CountryApp
+# CountryApp : Temas puntuales de la sección - Parte 1
+
+Rutas
+RouterLink y RouterLinkActive
+Componentes especializados
+DebounceTime
+Inputs
+SwitchMaps
+Consumo de APIs
+Tipado de datos
+Menú de aplicación
+
+# CountryApp : Temas puntuales de la sección - Parte 2
+
+ngClass y diferentes formas de manipular clases
+CSS condicionales
+Optimizaciones a peticiones HTTP
+Debounce manual mediante RxJs
+LocalStorage
+Ideas de Store
+Re-utilización de componentes
+Varios operadores de RxJS aplicados
+
+# CountryApp : 
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.0.5.
 
